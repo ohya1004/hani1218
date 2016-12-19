@@ -1,6 +1,9 @@
 # weather linebot 
 
 A django implementation of new [Line Message API](https://devdocs.line.me/en/#messaging-api) using [line-bot-sdk-python](https://github.com/line/line-bot-sdk-python)
+
+
+### Purpose
 Can tell you information about weather in Taiwan as long as you input a city and "天氣"
 
 ## Setup
