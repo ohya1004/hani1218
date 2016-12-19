@@ -16,25 +16,18 @@ parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 def get_weather(location):
     url = 'http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-15472AB4-58F6-430C-AF81-7B4BCFC16BAE'
-    response = urlopen(url)
-    tree = parse(response)
-    root = tree.getroot();
-    NS = '{urn:cwb:gov:tw:cwbcommon:0.1}'
-
-    for item in root.iterfind(".//{NS}location".format(NS = NS)):
-        if location in item[0].text:
-            weather = item.find(".//{NS}parameterName".format(NS = NS))
-            return item[0].text + weather.text
-    return "Can't find " + location
+    c = urlopen(url)
+    c1 = c.split('<locationName>臺北市</locationName>')
+    c2 = c1[1].split('<parameterName>')
+    c3 = c2[1].split('</parameterName>')
+    return c3[0]
 
 @csrf_exempt
 def callback(request):
     if request.method == 'POST':
         signature = request.META['HTTP_X_LINE_SIGNATURE']
         body = request.body.decode('utf-8')
-        location_list = ["臺北", "新北", "桃園", "臺中", "臺南", "高雄", "基隆",\
-                        "新竹", "苗栗", "彰化", "南投", "雲林", "嘉義", "屏東",\
-                        "宜蘭", "花蓮", "台東", "澎湖", "金門", "連江"]
+        location_list = ["臺北", "新北", "桃園", "臺中", "臺南", "高雄", "基隆","新竹", "苗栗", "彰化", "南投", "雲林", "嘉義", "屏東","宜蘭", "花蓮", "台東", "澎湖", "金門", "連江"]
 
         try:
             events = parser.parse(body, signature)
