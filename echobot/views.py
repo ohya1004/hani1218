@@ -25,30 +25,28 @@ def callback(request):
             return HttpResponseForbidden()
         except LineBotApiError:
             return HttpResponseBadRequest()
-        try:
-            k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
-            c = requests.get(k)
-            e = c.text.encode('utf8')
-            c1 = e.split('<locationName>臺北市</locationName>')
-            c2 = c1[1].split('<parameterName>')
-            c3 = c2[1].split('</parameterName>')
-            weather = c3[0]
-            for event in events:
-                if isinstance(event, MessageEvent):
-                    if isinstance(event.message, TextMessage):
-                        if "臺南" in event.message.text :
-                            line_bot_api.reply_message(
-                                event.reply_token,
-                                TextSendMessage(text=weather)
-                            )
-                        else:
-                            line_bot_api.reply_message(
-                                event.reply_token,
-                                TextSendMessage(text="其他")
-                            )
-        except:
-            pass
 
+        k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
+        c = requests.get(k)
+        e = c.text.encode('utf8')
+        c1 = e.split('<locationName>臺北市</locationName>')
+        c2 = c1[1].split('<parameterName>')
+        c3 = c2[1].split('</parameterName>')
+        weather = c3[0]
+
+        for event in events:
+            if isinstance(event, MessageEvent):
+                if isinstance(event.message, TextMessage):
+                    if "臺南" in event.message.text :
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            TextSendMessage(text=weather)
+                        )
+                    else:
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            TextSendMessage(text="其他")
+                        )
 
         return HttpResponse()
     else:
