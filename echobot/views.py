@@ -14,14 +14,13 @@ from xml.dom import minidom
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 def get_weather(city):
-    k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
-    c = urlopen(k).read()
+    url = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
+    c = urlopen(url).read()
     tree = minidom.parseString(c)
     obs_values = tree.getElementsByTagName('locationName')
-    for i in range(0,22):
-        if obs_values[i].firstChild.nodeValue == city:
-            j=i*15
-            location = obs_values[i].firstChild.nodeValue
+    for i in range(0,21):
+        if obs_values[i].firstChild.nodeValue == city:      #從最上面的locationName開始找,直到找到使用者輸入的city為止,i為city的index
+            j=i*15                                          #因為除了"天氣"有parameterName這個tag,其他也有用到(EX最高溫.最低溫等),一個縣市共有15個parameterName,所以i*15
             obs_values2 = tree.getElementsByTagName('parameterName')
             weather = obs_values2[j].firstChild.nodeValue
     return city + weather
@@ -88,13 +87,13 @@ def callback(request):
                         elif "連江" in event.message.text :
                             reply = get_weather("連江縣")
                         else:
-                            reply = get_weather("臺南市")
+                            reply = get_weather("臺南市")  #如果只有輸入天氣,沒有輸入地點,會假設成要找臺南市的天氣
                         line_bot_api.reply_message(
                             event.reply_token,
                             TextSendMessage(text=reply)
                         )
                     else:
-                        line_bot_api.reply_message(
+                        line_bot_api.reply_message(    #如果沒提到天氣,就重複使用者說的話
                             event.reply_token,
                             TextSendMessage(text=event.message.text)
                         )
