@@ -1,6 +1,7 @@
-# django linebot example
+# weather linebot 
 
 A django implementation of new [Line Message API](https://devdocs.line.me/en/#messaging-api) using [line-bot-sdk-python](https://github.com/line/line-bot-sdk-python)
+Can tell you information about weather in Taiwan as long as you input a city and "天氣"
 
 ## Setup
 
@@ -26,8 +27,6 @@ Otherwise, you can also build your own https server.
 ### Set Webhook URL
 Set webhook url on your `LINE Developers` page to `https://"your domain name"/echobot/callback/`
 
-## Authors
-[Lee-W](https://github.com/Lee-W)
+### Reference
+Lee-W(https://github.com/Lee-W)
 
-## License
-MIT
