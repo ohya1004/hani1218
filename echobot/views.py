@@ -26,17 +26,17 @@ def callback(request):
         for event in events:
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
-					if "臺南" in event.message.text :
-						line_bot_api.reply_message(
-							event.reply_token,
+                    if "臺南" in event.message.text :
+                        line_bot_api.reply_message(
+                            event.reply_token,
 							#TextSendMessage(text=event.message.text)
-							TextSendMessage(text="有:臺南")
-						)
-					else:
-						line_bot_api.reply_message(
-							event.reply_token,
-							TextSendMessage(text="其他")
-						)
+                            TextSendMessage(text="有:臺南")
+                        )
+                    else:
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            TextSendMessage(text="其他")
+                        )
 
         return HttpResponse()
     else:
