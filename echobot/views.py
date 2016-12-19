@@ -6,6 +6,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 import urllib
+from urllib.request import urlopen
 import requests
 import re
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
