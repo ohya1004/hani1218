@@ -14,6 +14,7 @@ parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 @csrf_exempt
 def callback(request):
+    weather = ""
     if request.method == 'POST':
         signature = request.META['HTTP_X_LINE_SIGNATURE']
         body = request.body.decode('utf-8')
@@ -31,6 +32,7 @@ def callback(request):
             c1 = e.split('<locationName>臺北市</locationName>')
             c2 = c1[1].split('<parameterName>')
             c3 = c2[1].split('</parameterName>')
+            weather = c3[0]
         except:
             pass
         for event in events:
@@ -39,7 +41,7 @@ def callback(request):
                     if "臺南" in event.message.text :
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text=c3[0])
+                            TextSendMessage(text=weather)
                         )
                     else:
                         line_bot_api.reply_message(
