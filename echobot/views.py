@@ -36,7 +36,7 @@ def callback(request):
                     if "臺南" in event.message.text :
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text=k)
+                            TextSendMessage(text=e)
                         )
                     else:
                         line_bot_api.reply_message(
