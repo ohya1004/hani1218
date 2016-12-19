@@ -38,7 +38,7 @@ def callback(request):
             obs_values = tree.getElementsByTagName('locationName')
             location = obs_values[0].firstChild.nodeValue
             obs_values2 = tree.getElementsByTagName('parameterName')
-            weather = obs_values[0].firstChild.nodeValue
+            weather = obs_values2[0].firstChild.nodeValue
             reply = location + weather
         except:
             pass
