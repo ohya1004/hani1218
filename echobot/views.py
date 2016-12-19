@@ -20,9 +20,10 @@ def get_weather(city):
     obs_values = tree.getElementsByTagName('locationName')
     for i in range(0,22):
         if obs_values[i].firstChild.nodeValue == city:
+            j=i*15
             location = obs_values[i].firstChild.nodeValue
             obs_values2 = tree.getElementsByTagName('parameterName')
-            weather = obs_values2[i].firstChild.nodeValue
+            weather = obs_values2[j].firstChild.nodeValue
     return city + weather
 
 @csrf_exempt
