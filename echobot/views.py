@@ -37,14 +37,24 @@ def callback(request):
             return HttpResponseForbidden()
         except LineBotApiError:
             return HttpResponseBadRequest()
-        weather = "天氣1"
-        
 
         for event in events:
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
                     if "臺南" in event.message.text :
                         reply = get_weather("臺南市")
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            TextSendMessage(text=reply)
+                        )
+                    elif "臺北" in event.message.text :
+                        reply = get_weather("臺北市")
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            TextSendMessage(text=reply)
+                        )
+                    elif "連江" in event.message.text :
+                        reply = get_weather("連江縣")
                         line_bot_api.reply_message(
                             event.reply_token,
                             TextSendMessage(text=reply)
