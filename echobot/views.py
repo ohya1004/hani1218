@@ -18,10 +18,11 @@ def get_weather(city):
     c = urlopen(k).read()
     tree = minidom.parseString(c)
     obs_values = tree.getElementsByTagName('locationName')
-    location = obs_values[0].firstChild.nodeValue
-    obs_values2 = tree.getElementsByTagName('parameterName')
-    weather = obs_values2[0].firstChild.nodeValue
-    return location + weather
+    for i in range(0,21):
+        if obs_values[i] == city :
+            obs_values2 = tree.getElementsByTagName('parameterName')
+            weather = obs_values2[i].firstChild.nodeValue
+    return city + weather
 
 @csrf_exempt
 def callback(request):
