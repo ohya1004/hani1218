@@ -33,21 +33,22 @@ def callback(request):
             c2 = c1[1].split('<parameterName>')
             c3 = c2[1].split('</parameterName>')
             weather = c3[0]
+            for event in events:
+                if isinstance(event, MessageEvent):
+                    if isinstance(event.message, TextMessage):
+                        if "臺南" in event.message.text :
+                            line_bot_api.reply_message(
+                                event.reply_token,
+                                TextSendMessage(text=weather)
+                            )
+                        else:
+                            line_bot_api.reply_message(
+                                event.reply_token,
+                                TextSendMessage(text="其他")
+                            )
         except:
             pass
-        for event in events:
-            if isinstance(event, MessageEvent):
-                if isinstance(event.message, TextMessage):
-                    if "臺南" in event.message.text :
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=weather)
-                        )
-                    else:
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text="其他")
-                        )
+
 
         return HttpResponse()
     else:
