@@ -20,9 +20,9 @@ def callback(request):
         k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
         c = requests.get(k)
         e = c.text.encode('utf8')
-        #c1 = e.split('<locationName>臺北市</locationName>')
-        #c2 = c1[1].split('<parameterName>')
-        #c3 = c2[1].split('</parameterName>')
+        c1 = e.split('<locationName>臺北市</locationName>')
+        c2 = c1[1].split('<parameterName>')
+        c3 = c2[1].split('</parameterName>')
         try:
             events = parser.parse(body, signature)
         except InvalidSignatureError:
@@ -36,7 +36,7 @@ def callback(request):
                     if "臺南" in event.message.text :
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text=e)
+                            TextSendMessage(text="臺南")
                         )
                     else:
                         line_bot_api.reply_message(
