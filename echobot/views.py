@@ -9,6 +9,7 @@ from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from urllib.request import urlopen
+import requests
 from xml.etree.ElementTree import parse
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
@@ -16,11 +17,13 @@ parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 def get_weather(location):
     url = 'http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-15472AB4-58F6-430C-AF81-7B4BCFC16BAE'
-    c = urlopen(url)
-    c1 = c.split('<locationName>臺北市</locationName>')
+    c = requests.get(url)
+    e = c.text.encode('utf8')
+    c1 = e.split('<locationName>臺北市</locationName>')
     c2 = c1[1].split('<parameterName>')
     c3 = c2[1].split('</parameterName>')
-    return c3[0]
+    weather = c3[0]
+    return weather
 
 @csrf_exempt
 def callback(request):
