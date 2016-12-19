@@ -18,7 +18,7 @@ def get_weather(city):
     c = urlopen(url).read()
     tree = minidom.parseString(c)
     obs_values = tree.getElementsByTagName('locationName')
-    for i in range(0,21):
+    for i in range(0,22):
         if obs_values[i].firstChild.nodeValue == city:      #從最上面的locationName開始找,直到找到使用者輸入的city為止,i為city的index
             j=i*15                                          #因為除了"天氣"有parameterName這個tag,其他也有用到(EX最高溫.最低溫等),一個縣市共有15個parameterName,所以i*15
             obs_values2 = tree.getElementsByTagName('parameterName')
