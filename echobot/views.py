@@ -18,8 +18,9 @@ def get_weather(city):
     c = urlopen(k).read()
     tree = minidom.parseString(c)
     obs_values = tree.getElementsByTagName('locationName')
-    for i in range(0,21):
-        if obs_values[i] == city :
+    for i in range(0,22):
+        if obs_values[i].firstChild.nodeValue == city:
+            location = obs_values[i].firstChild.nodeValue
             obs_values2 = tree.getElementsByTagName('parameterName')
             weather = obs_values2[i].firstChild.nodeValue
     return city + weather
