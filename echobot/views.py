@@ -24,30 +24,17 @@ def callback(request):
         except LineBotApiError:
             return HttpResponseBadRequest()
 
-
-		k = "http://opendata.cwb.gov.tw/datadownload?dataid=F-C0032-001"
-		c = urllib.urlopen(k).read()
-		c1 = c.split('<locationName>臺南市</locationName>')
-		c2 = c1[1].split('<parameterName>')
-		c3 = c2[1].split('</parameterName>')
-'''m = 1
-try:
-    while c1[m] != None:
-        c2 = c1[m].split('","tag"')
-        c2[0] = re.sub("(<[^>]+>)", "", c2[0])
-        if c2[0] != None:
-            print c2[0]
-            print "--------------------------------------------------"
-            m = m+1
-except:
-    pass'''
         for event in events:
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
+					profile = line_bot_api.get_profile('<user_id>')
                     line_bot_api.reply_message(
                         event.reply_token,
                         #TextSendMessage(text=event.message.text)
-                        TextSendMessage(text=c3[0])
+						if profile.status_message == "1":
+							TextSendMessage(text="臺南")
+						else:
+							TextSendMessage(text="其他")
                     )
 
         return HttpResponse()
