@@ -19,9 +19,10 @@ def callback(request):
         body = request.body.decode('utf-8')
         k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
         c = requests.get(k)
-        #c1 = c.split('<locationName>臺北市</locationName>')
-        #c2 = c1[1].split('<parameterName>')
-        #c3 = c2[1].split('</parameterName>')
+        e = c.text.encode('utf8')
+        c1 = e.split('<locationName>臺北市</locationName>')
+        c2 = c1[1].split('<parameterName>')
+        c3 = c2[1].split('</parameterName>')
         try:
             events = parser.parse(body, signature)
         except InvalidSignatureError:
