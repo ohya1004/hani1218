@@ -42,134 +42,53 @@ def callback(request):
         for event in events:
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
-                    if "臺南" in event.message.text :
-                        reply = get_weather("臺南市")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "臺北" in event.message.text :
-                        reply = get_weather("臺北市")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "新北" in event.message.text :
-                        reply = get_weather("新北市")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "桃園" in event.message.text :
-                        reply = get_weather("桃園市")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "臺中" in event.message.text :
-                        reply = get_weather("臺中市")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "高雄" in event.message.text :
-                        reply = get_weather("高雄市")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "基隆" in event.message.text :
-                        reply = get_weather("基隆市")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "新竹縣" in event.message.text :
-                        reply = get_weather("新竹縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "新竹市" in event.message.text :
-                        reply = get_weather("新竹市")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "苗栗" in event.message.text :
-                        reply = get_weather("苗栗縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "彰化" in event.message.text :
-                        reply = get_weather("彰化縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "南投" in event.message.text :
-                        reply = get_weather("南投縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "雲林" in event.message.text :
-                        reply = get_weather("雲林縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "嘉義縣" in event.message.text :
-                        reply = get_weather("嘉義縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "嘉義市" in event.message.text :
-                        reply = get_weather("嘉義市")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "屏東" in event.message.text :
-                        reply = get_weather("屏東縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "宜蘭" in event.message.text :
-                        reply = get_weather("宜蘭縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "花蓮" in event.message.text :
-                        reply = get_weather("花蓮縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "臺東" in event.message.text :
-                        reply = get_weather("臺東縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "澎湖" in event.message.text :
-                        reply = get_weather("澎湖縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "金門" in event.message.text :
-                        reply = get_weather("金門縣")
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=reply)
-                        )
-                    elif "連江" in event.message.text :
-                        reply = get_weather("連江縣")
+                    if "天氣" in event.message.text :                 
+                        if "臺南" in event.message.text :
+                            reply = get_weather("臺南市")
+                        elif "臺北" in event.message.text :
+                            reply = get_weather("臺北市")
+                        elif "新北" in event.message.text :
+                            reply = get_weather("新北市")
+                        elif "桃園" in event.message.text :
+                            reply = get_weather("桃園市")
+                        elif "臺中" in event.message.text :
+                            reply = get_weather("臺中市")
+                        elif "高雄" in event.message.text :
+                            reply = get_weather("高雄市")
+                        elif "基隆" in event.message.text :
+                            reply = get_weather("基隆市")
+                        elif "新竹縣" in event.message.text :
+                            reply = get_weather("新竹縣")
+                        elif "新竹市" in event.message.text :
+                            reply = get_weather("新竹市")
+                        elif "苗栗" in event.message.text :
+                            reply = get_weather("苗栗縣")
+                        elif "彰化" in event.message.text :
+                            reply = get_weather("彰化縣")
+                        elif "南投" in event.message.text :
+                            reply = get_weather("南投縣")
+                        elif "雲林" in event.message.text :
+                            reply = get_weather("雲林縣")
+                        elif "嘉義縣" in event.message.text :
+                            reply = get_weather("嘉義縣")
+                        elif "嘉義市" in event.message.text :
+                            reply = get_weather("嘉義市")
+                        elif "屏東" in event.message.text :
+                            reply = get_weather("屏東縣")
+                        elif "宜蘭" in event.message.text :
+                            reply = get_weather("宜蘭縣")
+                        elif "花蓮" in event.message.text :
+                            reply = get_weather("花蓮縣")
+                        elif "臺東" in event.message.text :
+                            reply = get_weather("臺東縣")
+                        elif "澎湖" in event.message.text :
+                            reply = get_weather("澎湖縣")
+                        elif "金門" in event.message.text :
+                            reply = get_weather("金門縣")
+                        elif "連江" in event.message.text :
+                            reply = get_weather("連江縣")
+                        else:
+                            reply = get_weather("臺南市")
                         line_bot_api.reply_message(
                             event.reply_token,
                             TextSendMessage(text=reply)
@@ -177,7 +96,7 @@ def callback(request):
                     else:
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text="其他")
+                            TextSendMessage(text=event.message.text)
                         )
 
         return HttpResponse()
