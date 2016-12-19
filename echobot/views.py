@@ -29,7 +29,7 @@ def callback(request):
             weather = "天氣2"
             k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
             c = requests.get(k)
-            e = c.text.encode('utf8')
+            #e = c.text.encode('utf8')
             weather = "天氣3"
             c1 = e.split('<locationName>臺北市</locationName>')
             c2 = c1[1].split('<parameterName>')
