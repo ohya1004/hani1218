@@ -16,14 +16,17 @@ line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 def get_weather(location):
-    url = 'http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-15472AB4-58F6-430C-AF81-7B4BCFC16BAE'
-    c = requests.get(url)
-    e = c.text.encode('utf8')
-    c1 = e.split('<locationName>臺北市</locationName>')
-    c2 = c1[1].split('<parameterName>')
-    c3 = c2[1].split('</parameterName>')
-    weather = c3[0]
-    return weather
+    url = 'http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D'
+    response = urlopen(url)
+    tree = parse(response)
+    root = tree.getroot();
+    NS = '{urn:cwb:gov:tw:cwbcommon:0.1}'
+
+    for item in tree.iter(tag='locationName'):
+        if item.text=="臺北市":
+            weather = item.find(".//{NS}parameterName".format(NS = NS))
+            return item.text + weather.text
+    return "Can't find " + location
 
 @csrf_exempt
 def callback(request):
