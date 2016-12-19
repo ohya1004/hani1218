@@ -37,7 +37,7 @@ def callback(request):
             #c2 = c1[1].split('<parameterName>')
             #c3 = c2[1].split('</parameterName>')
             tree = minidom.parseString(c)
-            root = tree.getroot();
+            #root = tree.getroot();
             obs_values = tree.getElementsByTagName('locationName')
             a = obs_values[0].firstChild.nodeValue
             weather = "天氣4"
