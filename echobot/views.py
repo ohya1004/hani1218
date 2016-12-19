@@ -28,19 +28,18 @@ def callback(request):
         except LineBotApiError:
             return HttpResponseBadRequest()
         weather = "天氣1"
+        reply = "no"
         try:
             weather = "天氣2"
             k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
             c = urlopen(k).read()
             weather = "天氣3"
-            #c1 = c.split('<locationName>臺北市</locationName>')
-            #c2 = c1[1].split('<parameterName>')
-            #c3 = c2[1].split('</parameterName>')
             tree = minidom.parseString(c)
-            #root = tree.getroot();
             obs_values = tree.getElementsByTagName('locationName')
-            a = obs_values[0].firstChild.nodeValue
-            weather = "天氣4"
+            location = obs_values[0].firstChild.nodeValue
+            obs_values2 = tree.getElementsByTagName('parameterName')
+            weather = obs_values[0].firstChild.nodeValue
+            reply = location + weather
         except:
             pass
         for event in events:
@@ -49,7 +48,7 @@ def callback(request):
                     if "臺南" in event.message.text :
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text=weather)
+                            TextSendMessage(text=reply)
                         )
                     else:
                         line_bot_api.reply_message(
