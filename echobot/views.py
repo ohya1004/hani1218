@@ -28,11 +28,11 @@ def callback(request):
                 if isinstance(event.message, TextMessage):
                     line_bot_api.reply_message(
                         event.reply_token,
-						if event.message.text == "1":
+						#if event.message.text == "1":
 							#TextSendMessage(text=event.message.text)
-							TextSendMessage(text="臺南")
-						else:
-							TextSendMessage(text="其他")
+						TextSendMessage(text="臺南")
+						#else:
+							#TextSendMessage(text="其他")
                     )
 
         return HttpResponse()
