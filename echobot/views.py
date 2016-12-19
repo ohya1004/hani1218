@@ -13,7 +13,15 @@ from xml.etree.ElementTree import parse
 from xml.dom import minidom
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
-
+def get_weather():
+    k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
+    c = urlopen(k).read()
+    tree = minidom.parseString(c)
+    obs_values = tree.getElementsByTagName('locationName')
+    location = obs_values[0].firstChild.nodeValue
+    obs_values2 = tree.getElementsByTagName('parameterName')
+    weather = obs_values2[0].firstChild.nodeValue
+    return location + weather
 
 @csrf_exempt
 def callback(request):
@@ -28,20 +36,8 @@ def callback(request):
         except LineBotApiError:
             return HttpResponseBadRequest()
         weather = "天氣1"
-        reply = "no"
-        try:
-            weather = "天氣2"
-            k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
-            c = urlopen(k).read()
-            weather = "天氣3"
-            tree = minidom.parseString(c)
-            obs_values = tree.getElementsByTagName('locationName')
-            location = obs_values[0].firstChild.nodeValue
-            obs_values2 = tree.getElementsByTagName('parameterName')
-            weather = obs_values2[0].firstChild.nodeValue
-            reply = location + weather
-        except:
-            pass
+        reply = get_weather()
+
         for event in events:
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
