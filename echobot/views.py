@@ -10,6 +10,7 @@ from urllib.request import urlopen
 import requests
 import re
 from xml.etree.ElementTree import parse
+from xml.dom import minidom
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
@@ -30,14 +31,15 @@ def callback(request):
         try:
             weather = "天氣2"
             k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
-            c = urlopen(k)
+            c = urlopen(k).read()
             weather = "天氣3"
             #c1 = c.split('<locationName>臺北市</locationName>')
             #c2 = c1[1].split('<parameterName>')
             #c3 = c2[1].split('</parameterName>')
-			tree = parse(response)
+			tree = minidom.parseString(c)
             root = tree.getroot();
-            NS = '{urn:cwb:gov:tw:cwbcommon:0.1}'
+            obs_values = tree.getElementsByTagName('locationName')
+            a = obs_values[0].firstChild.nodeValue
             weather = "天氣4"
         except:
             pass
