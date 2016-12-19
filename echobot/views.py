@@ -31,6 +31,7 @@ def callback(request):
             c1 = e.split('<locationName>臺北市</locationName>')
             c2 = c1[1].split('<parameterName>')
             c3 = c2[1].split('</parameterName>')
+            
         except:
             pass
         for event in events:
@@ -39,7 +40,7 @@ def callback(request):
                     if "臺南" in event.message.text :
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text="臺南")
+                            TextSendMessage(text=c3[0])
                         )
                     else:
                         line_bot_api.reply_message(
