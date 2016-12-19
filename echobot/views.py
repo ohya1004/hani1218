@@ -12,12 +12,15 @@ parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
 
 @csrf_exempt
-def callback(request):
+def weather():
     k = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
     c = urllib.urlopen(k).read()
     c1 = c.split('<locationName>臺北市</locationName>')
     c2 = c1[1].split('<parameterName>')
     c3 = c2[1].split('</parameterName>')
+    return c3[0]
+	
+def callback(request):
     if request.method == 'POST':
         signature = request.META['HTTP_X_LINE_SIGNATURE']
         body = request.body.decode('utf-8')
@@ -36,7 +39,7 @@ def callback(request):
                         line_bot_api.reply_message(
                             event.reply_token,
 							#TextSendMessage(text=event.message.text)
-                            TextSendMessage(text=k)
+                            TextSendMessage(text="有臺南")
                         )
                     else if "臺北" in event.message.text:
                         line_bot_api.reply_message(
