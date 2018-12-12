@@ -38,16 +38,8 @@ def callback(request):
         except LineBotApiError:
             return HttpResponseBadRequest()
 
-        Hello = ['Hello', '哈囉']
-        End = ['Reset', "重新"]
-        Confirm = ['有', '有喔', '有阿', '好', '好喔', '好阿', '可', '可以']
-        Disable = ['沒有', '不']
-        country = ['東京', '大阪', '曼谷', '首爾', '沖繩', '香港', '京都', '新加坡', '上海', '巴黎']
-        location = LocationSendMessage(
-        title='National Cheng Kung University Hospital',
-        address='Tainan',
-        latitude=23.001673,
-        longitude=120.220120)
+        Hello = ["Hello", "哈囉"]
+
 
         for event in events:
             if isinstance(event, MessageEvent):
