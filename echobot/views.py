@@ -25,6 +25,7 @@ def get_weather(city):
             weather = obs_values2[j].firstChild.nodeValue
     return city + weather
 
+did = 0
 
 @csrf_exempt
 def callback(request):
@@ -39,7 +40,7 @@ def callback(request):
         except LineBotApiError:
             return HttpResponseBadRequest()
 
-        did = 0
+        
         Hello = ["Hello", "哈囉"]
         Confirm = ["有", "有喔", "有阿", "好", "好喔", "好阿", "可", "可以"]
 
