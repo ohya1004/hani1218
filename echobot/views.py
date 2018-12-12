@@ -17,19 +17,20 @@ def get_weather(city):
     url = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
     c = urlopen(url).read()
     tree = minidom.parseString(c)
-    obs_values = tree.getElementsByTagName('locationName')
+    obs_values = tree.getElementsByTagName("locationName")
     for i in range(0,22):
         if obs_values[i].firstChild.nodeValue == city:      #從最上面的locationName開始找,直到找到使用者輸入的city為止,i為city的index
             j=i*15                                          #因為除了"天氣"有parameterName這個tag,其他也有用到(EX最高溫.最低溫等),一個縣市共有15個parameterName,所以i*15
-            obs_values2 = tree.getElementsByTagName('parameterName')
+            obs_values2 = tree.getElementsByTagName("parameterName")
             weather = obs_values2[j].firstChild.nodeValue
     return city + weather
 
+
 @csrf_exempt
 def callback(request):
-    if request.method == 'POST':
-        signature = request.META['HTTP_X_LINE_SIGNATURE']
-        body = request.body.decode('utf-8')
+    if request.method == "POST":
+        signature = request.META["HTTP_X_LINE_SIGNATURE"]
+        body = request.body.decode("utf-8")
 
         try:
             events = parser.parse(body, signature)
@@ -38,14 +39,24 @@ def callback(request):
         except LineBotApiError:
             return HttpResponseBadRequest()
 
+        did = 0
         Hello = ["Hello", "哈囉"]
+        Confirm = ["有", "有喔", "有阿", "好", "好喔", "好阿", "可", "可以"]
 
 
         for event in events:
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
+                    uid = event.source.user_id
+                    if did == 1:
+                        reply = "請問您咳嗽有血痰嗎？"
+                        line_bot_api.reply_message(
+                                event.reply_token,
+                                TextSendMessage(text=reply)
+                            )
                     if event.message.text in Hello:
                         reply = "您好，手環資料顯示您的體溫似乎比較高，請問您有咳嗽情形嗎？"
+                        did = 1
                         line_bot_api.reply_message(
                                 event.reply_token,
                                 TextSendMessage(text=reply)
