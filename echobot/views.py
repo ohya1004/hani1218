@@ -43,7 +43,7 @@ def callback(request):
         
         Hello = ["Hello", "哈囉", "嗨"]
         Confirm = ["有", "有喔", "有阿", "好", "好喔", "好阿", "可", "可以"]
-
+        did = 0
 
         for event in events:
             if isinstance(event, MessageEvent):
@@ -56,7 +56,7 @@ def callback(request):
                                 event.reply_token,
                                 TextSendMessage(text=reply)
                             )
-                    if event.message.text in Hello:
+                    elif event.message.text in Hello:
                         did = 1
                         reply = str(did) + ","+uid+" 您好，手環資料顯示您的體溫似乎比較高，請問您有咳嗽情形嗎？"
                         
