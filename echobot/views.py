@@ -25,7 +25,6 @@ def get_weather(city):
             weather = obs_values2[j].firstChild.nodeValue
     return city + weather
 
-did = 0
 
 @csrf_exempt
 def callback(request):
@@ -49,15 +48,8 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
                     uid = event.source.user_id
-                    if did == 1:
-                        reply = "請問您咳嗽有血痰嗎？"
-                        line_bot_api.reply_message(
-                                event.reply_token,
-                                TextSendMessage(text=reply)
-                            )
                     if event.message.text in Hello:
-                        reply = "您好，手環資料顯示您的體溫似乎比較高，請問您有咳嗽情形嗎？"
-                        did = 1
+                        reply = uid+"您好，手環資料顯示您的體溫似乎比較高，請問您有咳嗽情形嗎？"
                         line_bot_api.reply_message(
                                 event.reply_token,
                                 TextSendMessage(text=reply)
