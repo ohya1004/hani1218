@@ -43,7 +43,7 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
                     if "Hello" in event.message.text:
-                        reply = '您好，手環資料顯示您的體溫似乎比較高，請問您有咳嗽情形嗎？'
+                        reply = "您好，手環資料顯示您的體溫似乎比較高，請問您有咳嗽情形嗎？"
                     elif "天氣" in event.message.text :               
                         if "臺南" in event.message.text :
                             reply = get_weather("臺南市")
