@@ -29,6 +29,7 @@ def get_weather(city):
 
 @csrf_exempt
 def callback(request):
+    did = 0
     if request.method == "POST":
         signature = request.META["HTTP_X_LINE_SIGNATURE"]
         body = request.body.decode("utf-8")
@@ -43,7 +44,7 @@ def callback(request):
         
         Hello = ["Hello", "哈囉", "嗨"]
         Confirm = ["有", "有喔", "有阿", "好", "好喔", "好阿", "可", "可以"]
-        did = 0
+
 
         for event in events:
             if isinstance(event, MessageEvent):
@@ -118,7 +119,7 @@ def callback(request):
                     else:
                         line_bot_api.reply_message(    #如果沒提到天氣,就重複使用者說的話
                             event.reply_token,
-                            TextSendMessage(text=event.message.text)
+                            TextSendMessage(text=str(did)+event.message.text)
                         )
 
         return HttpResponse()
