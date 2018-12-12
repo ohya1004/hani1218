@@ -13,7 +13,6 @@ from xml.etree.ElementTree import parse
 from xml.dom import minidom
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
-global did 
 
 def get_weather(city):
     url = "http://opendata.cwb.gov.tw/opendataapi?dataid=F-C0032-001&authorizationkey=CWB-E2BF5AB5-CB0D-4434-ABD8-1A1C7AF82F3D"
@@ -51,16 +50,8 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
                     uid = event.source.user_id
-                    if did == 1 and event.message.text in Confirm:
-                        reply = str(did) + ","+uid+" 您好，手環資料顯示您的體溫似乎比較高，請問您有咳嗽情形嗎？"
-                        did = 0
-                        line_bot_api.reply_message(
-                                event.reply_token,
-                                TextSendMessage(text=reply)
-                            )
-                    elif event.message.text in Hello:
-                        did = 1
-                        reply = str(did) + ","+uid+" 您好，手環資料顯示您的體溫似乎比較高，請問您有咳嗽情形嗎？"
+                    if event.message.text in Hello:
+                        reply = uid+" 您好，手環資料顯示您的體溫似乎比較高，請問您有咳嗽情形嗎？"
                         
                         line_bot_api.reply_message(
                                 event.reply_token,
